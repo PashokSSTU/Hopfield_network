@@ -2,6 +2,27 @@
 #include <iostream>
 #include "Matrix.h"
 
+
+void Matrix::resize(matrix_size_t size)
+{
+	this->size = size;
+	matrix.resize(size.rows);
+	for (int i = 0; i < size.rows; i++)
+	{
+		matrix[i].resize(size.columns);
+	}
+}
+
+void Matrix::resize(unsigned int rows, unsigned int columns)
+{
+	this->size = { rows, columns };
+	matrix.resize(rows);
+	for (int i = 0; i < rows; i++)
+	{
+		matrix[i].resize(columns);
+	}
+}
+
 bool operator==(const Matrix_Size size1, const Matrix_Size size2)
 {
 	return (size1.rows == size2.rows && size1.columns == size2.columns);
@@ -82,4 +103,25 @@ Matrix& Matrix::operator=(std::initializer_list<std::initializer_list<double>>& 
 	}
 
 	return *this;
+}
+
+Matrix Matrix::operator+() const
+{
+	return *this;
+}
+
+Matrix Matrix::operator-() const
+{
+	Matrix mat;
+	mat.resize(size);
+
+	for (int i = 0; i < size.rows; i++)
+	{
+		for (int j = 0; j < size.columns; j++)
+		{
+			mat.matrix[i][j] = -1 * matrix[i][j];
+		}
+	}
+
+	return mat;
 }

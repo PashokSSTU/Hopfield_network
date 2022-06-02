@@ -42,11 +42,11 @@ public:
 		{
 			this->size = _matrix.size;
 
-			matrix.resize(_matrix.size.columns);
+			matrix.resize(_matrix.size.rows);
 
-			for (int j = 1; j <= _matrix.size.columns; j++)
+			for (int i = 0; i < _matrix.size.rows; i++)
 			{
-				matrix.resize(_matrix.size.rows);
+				matrix[i].resize(_matrix.size.columns);
 			}
 
 			for (int i = 0; i < size.rows; i++)
@@ -59,7 +59,13 @@ public:
 		}
 		else
 		{
-
+			for (int i = 0; i < size.rows; i++)
+			{
+				for (int j = 0; j < size.columns; j++)
+				{
+					matrix[i][j] = _matrix.matrix[i][j];
+				}
+			}
 		}
 	}
 
@@ -86,11 +92,21 @@ public:
 	{
 	}
 
-	void print();
-
+	void resize(matrix_size_t size);
+	void resize(unsigned int rows, unsigned int columns);
 	double& operator()(int i, int j);
 	Matrix& operator=(const Matrix& obj);
 	Matrix& operator=(std::initializer_list<std::initializer_list<double>> &l);
+	Matrix operator+() const;
+	Matrix operator-() const;
+
+	//friend Matrix& operator+(const Matrix& obj1, const Matrix obj2);
+	//friend Matrix& operator-(const Matrix& obj1, const Matrix obj2);
+	//friend Matrix& operator*(const Matrix& obj1, const Matrix obj2);
+	//friend Matrix& operator*(double number, const Matrix obj2);
+
+	//Matrix& inv(const Matrix& obj);
+	//double det(const Matrix& obj);
 
 	friend std::ostream& operator<<(std::ostream& out ,const Matrix& obj);
 	

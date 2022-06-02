@@ -3,12 +3,15 @@
 
 int main(int argc, char* argv[])
 {
-	Matrix mat1{ {1, 2}, {3, 4}, {5, 6} };
-	Matrix mat2(3, 3);
+	Matrix mat{
+		{1, 2}, 
+		{3, 4}, 
+		{5, 6} 
+	};
 
-	mat1 = { {5} };
+	mat = +mat;
 
-	std::cout << mat1 << std::endl;
+	std::cout << mat << std::endl;
 
 	return 0;
 }
