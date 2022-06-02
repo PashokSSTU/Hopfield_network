@@ -2,13 +2,33 @@
 #include <vector>
 #include <initializer_list>
 #include <iostream>
+#include <cmath>
+
+#define ERROR_DIVISION_BY_ZERO "Error! Division by zero exception!"
+#define ERROR_OF_ADDING "Error! The dimensions of the matrices are not respected when adding!"
+#define ERROR_OF_SUBSTRACTING "Error! The dimensions of the matrices are not respected when substracting!"
+#define ERROR_OF_MULTIPLYING "Error! Matrix sizes not respected when multiplying!"
+#define ERROR_OF_CALCULATING_DETERMINANT "Determinant calculation error! This matrix is not square!"
+//"Inverse matrix calculation error! For this matrix, it does not exist!"
 
 struct Matrix_Size;
 class Matrix;
 
 bool operator==(const Matrix_Size size1, const Matrix_Size size2);
 bool operator!=(const Matrix_Size size1, const Matrix_Size size2);
+Matrix operator+(const Matrix& obj1, const Matrix& obj2);
+Matrix operator-(const Matrix& obj1, const Matrix& obj2);
+Matrix operator*(const Matrix& obj1, const Matrix& obj2);
+Matrix operator*(double number, const Matrix& obj);
+Matrix operator/(const Matrix& obj, double number);
 std::ostream& operator<<(std::ostream& out, const Matrix& obj);
+double multipy_of_vectors(int row, int col, const Matrix& obj1, const Matrix& obj2);
+
+
+double det(const Matrix& obj);
+int rank(const Matrix& obj);
+Matrix& adj(const Matrix& obj);	
+Matrix& inv(const Matrix& obj);
 
 
 struct Matrix_Size
@@ -94,22 +114,26 @@ public:
 
 	void resize(matrix_size_t size);
 	void resize(unsigned int rows, unsigned int columns);
+
 	double& operator()(int i, int j);
 	Matrix& operator=(const Matrix& obj);
 	Matrix& operator=(std::initializer_list<std::initializer_list<double>> &l);
 	Matrix operator+() const;
 	Matrix operator-() const;
 
-	//friend Matrix& operator+(const Matrix& obj1, const Matrix obj2);
-	//friend Matrix& operator-(const Matrix& obj1, const Matrix obj2);
-	//friend Matrix& operator*(const Matrix& obj1, const Matrix obj2);
-	//friend Matrix& operator*(double number, const Matrix obj2);
+	bool is_square() const;
+	matrix_size_t get_size() const;
+	double get_elem(int row, int col) const;
 
-	//Matrix& inv(const Matrix& obj);
-	//double det(const Matrix& obj);
+	friend Matrix operator+(const Matrix& obj1, const Matrix& obj2);
+	friend Matrix operator-(const Matrix& obj1, const Matrix& obj2);
+	friend Matrix operator*(const Matrix& obj1, const Matrix& obj2);
+	friend Matrix operator*(double number, const Matrix& obj);
+	friend Matrix operator/(const Matrix& obj, double number);
+	friend double det(const Matrix& obj);
 
 	friend std::ostream& operator<<(std::ostream& out ,const Matrix& obj);
-	
+	friend double multipy_of_vectors(int row, int col, const Matrix& obj1, const Matrix& obj2);
 
 
 private:
