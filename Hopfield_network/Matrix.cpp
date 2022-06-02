@@ -60,16 +60,26 @@ Matrix& Matrix::operator=(const Matrix& obj)
 	return *this;
 }
 
-Matrix& Matrix::operator=(std::initializer_list<std::initializer_list<double>>& l)
+Matrix& Matrix::operator=(std::initializer_list<std::initializer_list<double>>& list)
 {
-	size.rows = l.size();
-	//size.columns =
+	size.rows = list.size();
+	size.columns = 0;
 
-	auto ptr = std::data(l);
+	for (auto& x : list)
+		if (x.size() > size.columns)
+			size.columns = x.size();
 
-	unsigned int counter = 0;
-	for (auto row : l)
-		std::copy(row.begin(), row.end(), matrix[counter++].begin());
+	matrix.resize(size.rows);
+	for (int i = 0; i < size.rows; i++)
+	{
+		matrix[i].resize(size.columns);
+	}
+
+	auto it = list.begin();
+	for (int i = 0; i < size.rows; i++, it++)
+	{
+		std::copy(it->begin(), it->end(), matrix[i].begin());
+	}
 
 	return *this;
 }

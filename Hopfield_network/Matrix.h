@@ -13,8 +13,8 @@ std::ostream& operator<<(std::ostream& out, const Matrix& obj);
 
 struct Matrix_Size
 {
-	int rows;
-	int columns;
+	unsigned int rows;
+	unsigned int columns;
 
 	friend bool operator==(const Matrix_Size size1, const Matrix_Size size2);
 	friend bool operator!=(const Matrix_Size size1, const Matrix_Size size2);
@@ -26,7 +26,7 @@ class Matrix
 {
 public:
 	
-	Matrix(int rows = 3, int columns = 3) : size({ rows, columns })
+	Matrix(unsigned int rows = 3, unsigned int columns = 3) : size({ rows, columns })
 	{
 		matrix.resize(rows);
 
@@ -63,11 +63,23 @@ public:
 		}
 	}
 
-	Matrix(const std::initializer_list<std::initializer_list<double>>& list)
+	Matrix(const std::initializer_list<std::initializer_list<double>>& list) : size({ list.size(), 0 })
 	{
-		unsigned int counter = 0;
-		for (auto row : list)
-			std::copy(row.begin(), row.end(), matrix[counter++].begin());
+		for (auto& x : list)
+			if (x.size() > size.columns)
+				size.columns = x.size();
+		
+		matrix.resize(size.rows);
+		for (int i = 0; i < size.rows; i++)
+		{
+			matrix[i].resize(size.columns);
+		}
+
+		auto it = list.begin();
+		for (int i = 0; i < size.rows; i++, it++)
+		{
+			std::copy(it->begin(), it->end(), matrix[i].begin());
+		}
 	}
 
 	~Matrix()
