@@ -18,6 +18,8 @@ class Matrix;
 
 bool operator==(const Matrix_Size size1, const Matrix_Size size2);
 bool operator!=(const Matrix_Size size1, const Matrix_Size size2);
+bool operator==(const Matrix& obj1, const Matrix& obj2);
+bool operator!=(const Matrix& obj1, const Matrix& obj2);
 Matrix operator+(const Matrix& obj1, const Matrix& obj2);
 Matrix operator-(const Matrix& obj1, const Matrix& obj2);
 Matrix operator*(const Matrix& obj1, const Matrix& obj2);
@@ -25,13 +27,6 @@ Matrix operator*(double number, const Matrix& obj);
 Matrix operator/(const Matrix& obj, double number);
 std::ostream& operator<<(std::ostream& out, const Matrix& obj);
 double multipy_of_vectors(int row, int col, const Matrix& obj1, const Matrix& obj2);
-
-
-double det(const Matrix& obj);
-Matrix t(const Matrix& obj);
-int rank(const Matrix& obj);
-Matrix& adj(const Matrix& obj);	
-Matrix& inv(const Matrix& obj);
 
 
 struct Matrix_Size
@@ -56,6 +51,16 @@ public:
 		for (int j = 0; j < rows; j++)
 		{
 			matrix[j].resize(columns);
+		}
+	}
+
+	Matrix(matrix_size_t _size) : size(_size)
+	{
+		matrix.resize(_size.rows);
+
+		for (int j = 0; j < _size.rows; j++)
+		{
+			matrix[j].resize(_size.columns);
 		}
 	}
 
@@ -129,6 +134,8 @@ public:
 	double get_elem(int row, int col) const;
 	void set_elem(double data, int row, int col);
 
+	friend bool operator==(const Matrix& obj1, const Matrix& obj2);
+	friend bool operator!=(const Matrix& obj1, const Matrix& obj2);
 	friend Matrix operator+(const Matrix& obj1, const Matrix& obj2);
 	friend Matrix operator-(const Matrix& obj1, const Matrix& obj2);
 	friend Matrix operator*(const Matrix& obj1, const Matrix& obj2);
@@ -141,6 +148,11 @@ public:
 
 	static Matrix Zeros(int rows, int columns);
 	static Matrix Identity(int rows, int columns);
+	static double det(const Matrix& obj);
+	static Matrix t(const Matrix& obj);
+	static int rank(const Matrix& obj);
+	static Matrix& adj(const Matrix& obj);
+	static Matrix& inv(const Matrix& obj);
 
 	static struct Convert
 	{

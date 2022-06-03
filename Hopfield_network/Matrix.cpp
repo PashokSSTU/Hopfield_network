@@ -125,6 +125,33 @@ Matrix& Matrix::operator=(std::initializer_list<std::initializer_list<double>>& 
 	return *this;
 }
 
+bool operator==(const Matrix& obj1, const Matrix& obj2)
+{
+	if (obj1.get_size() != obj2.get_size())
+	{
+		return false;
+	}
+
+	bool flag_equals = true;
+	for (int i = 1; i <= obj1.get_size().rows; i++)
+	{
+		for (int j = 1; j <= obj1.get_size().columns; j++)
+		{
+			if(obj1.get_elem(i, j) != obj2.get_elem(i, j))
+			{
+				flag_equals = false;
+			}
+		}
+	}
+
+	return flag_equals;
+}
+
+bool operator!=(const Matrix& obj1, const Matrix& obj2)
+{
+	return !(operator==(obj1, obj2));
+}
+
 Matrix Matrix::operator+() const
 {
 	return *this;
@@ -258,7 +285,7 @@ double multipy_of_vectors(int row, int col, const Matrix& obj1, const Matrix& ob
 	return elem;
 }
 
-double det(const Matrix& obj)
+double Matrix::det(const Matrix& obj)
 {
 	if (!obj.is_square())
 	{
@@ -269,57 +296,57 @@ double det(const Matrix& obj)
 
 	if (obj.get_size().rows == 1)
 	{
-		return obj.matrix[0][0];
+		return obj.get_elem(1, 1);
 	}
 	else if (obj.get_size().rows == 2)
 	{
-		return (obj.matrix[0][0] * obj.matrix[1][1] - obj.matrix[0][1] * obj.matrix[1][0]);
+		return (obj.get_elem(1, 1) * obj.get_elem(2, 2) - obj.get_elem(1, 2) * obj.get_elem(2, 1));
 	}
 	else if (obj.get_size().rows == 3)
 	{
-		return (obj.matrix[0][0] * obj.matrix[1][1] * obj.matrix[2][2] + obj.matrix[0][1] * obj.matrix[1][2] * obj.matrix[2][0]
-			+ obj.matrix[0][2] * obj.matrix[1][0] * obj.matrix[2][1] - obj.matrix[0][2] * obj.matrix[1][1] * obj.matrix[2][0] - 
-			obj.matrix[0][0] * obj.matrix[1][2] * obj.matrix[2][1] - obj.matrix[0][1] * obj.matrix[1][0] * obj.matrix[2][2]
+		return (obj.get_elem(1, 1) * obj.get_elem(2, 2) * obj.get_elem(3, 3) + obj.get_elem(1, 2) * obj.get_elem(2, 3) * obj.get_elem(3, 1)
+			+ obj.get_elem(1, 3) * obj.get_elem(2, 1) * obj.get_elem(3, 2) - obj.get_elem(1, 3) * obj.get_elem(2, 2) * obj.get_elem(3, 1) 
+			- obj.get_elem(1, 1) * obj.get_elem(2, 3) * obj.get_elem(3, 2) - obj.get_elem(1, 2) * obj.get_elem(2, 1) * obj.get_elem(3, 3)
 			);
 	}
 	else
 	{
-		for (int _j = 0; _j < obj.size.columns; _j++)
+		for (int _j = 1; _j <= obj.get_size().columns; _j++)
 		{
-			Matrix tmp(obj.size.rows - 1, obj.size.columns - 1);
-			unsigned int j_tmp = 0;
+			Matrix tmp(obj.get_size().rows - 1, obj.get_size().columns - 1);
+			unsigned int j_tmp = 1;
 
-			for (int i = 1; i < obj.size.rows; i++)
+			for (int i = 2; i <= obj.get_size().rows; i++)
 			{
-				for (int j = 0; j < obj.size.columns; j++)
+				for (int j = 1; j <= obj.get_size().columns; j++)
 				{
 					if (j == _j)
 					{
 						continue;
 					}
 
-					tmp.matrix[i - 1][j_tmp++] = obj.matrix[i][j];
+					tmp.set_elem(obj.get_elem(i, j), i - 1, j_tmp++);
 
-					if (j_tmp == (obj.size.rows - 1))
-						j_tmp = 0;
+					if (j_tmp == (obj.get_size().columns))
+						j_tmp = 1;
 				}
 			}
 
-			result += std::pow((-1), (1 + (_j + 1))) * obj.matrix[0][_j] * det(tmp);
+			result += std::pow((-1), (1 + (_j))) * obj.get_elem(1, _j) * det(tmp);
 		}
 	}
 	return result;
 }
 
-Matrix t(const Matrix& obj)
+Matrix Matrix::t(const Matrix& obj)
 {
 	Matrix result(obj.get_size().columns, obj.get_size().rows);
 
-	for (int i = 0; i < result.get_size().rows; i++)
+	for (int i = 1; i <= result.get_size().rows; i++)
 	{
-		for (int j = 0; j < result.get_size().columns; j++)
+		for (int j = 1; j <= result.get_size().columns; j++)
 		{
-			result.set_elem(obj.get_elem(j + 1, i + 1), i + 1, j + 1);
+			result.set_elem(obj.get_elem(j, i), i, j);
 		}
 	}
 
