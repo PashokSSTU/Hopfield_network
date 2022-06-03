@@ -38,6 +38,11 @@ double Matrix::get_elem(int row, int col) const
 	return matrix[row - 1][col - 1];
 }
 
+void Matrix::set_elem(double data, int row, int col)
+{
+	this->matrix[row - 1][col - 1] = data;
+}
+
 bool operator==(const Matrix_Size size1, const Matrix_Size size2)
 {
 	return (size1.rows == size2.rows && size1.columns == size2.columns);
@@ -295,7 +300,7 @@ double det(const Matrix& obj)
 
 					tmp.matrix[i - 1][j_tmp++] = obj.matrix[i][j];
 
-					if (j_tmp == 3)
+					if (j_tmp == (obj.size.rows - 1))
 						j_tmp = 0;
 				}
 			}
@@ -303,5 +308,104 @@ double det(const Matrix& obj)
 			result += std::pow((-1), (1 + (_j + 1))) * obj.matrix[0][_j] * det(tmp);
 		}
 	}
+	return result;
+}
+
+Matrix t(const Matrix& obj)
+{
+	Matrix result(obj.get_size().columns, obj.get_size().rows);
+
+	for (int i = 0; i < result.get_size().rows; i++)
+	{
+		for (int j = 0; j < result.get_size().columns; j++)
+		{
+			result.set_elem(obj.get_elem(j + 1, i + 1), i + 1, j + 1);
+		}
+	}
+
+	return result;
+}
+
+Matrix Matrix::Convert::ToIdentity(const Matrix& obj)
+{
+	if (obj.get_size().rows != obj.get_size().columns)
+	{
+		throw ERROR_OF_CONVERTING_TO_IDENTITY_MATRIX;
+	}
+
+	Matrix result(obj.get_size().rows, obj.get_size().columns);
+
+	for (int i = 1; i <= result.get_size().rows; i++)
+	{
+		for (int j = 1; j <= result.get_size().columns; j++)
+		{
+			if (i == j)
+			{
+				result.set_elem(1, i, j);
+			}
+			else
+			{
+				result.set_elem(0, i, j);
+			}
+		}
+	}
+
+	return result;
+}
+
+Matrix Matrix::Convert::ToZeros(const Matrix& obj)
+{
+	Matrix result(obj.get_size().rows, obj.get_size().columns);
+
+	for (int i = 1; i <= result.get_size().rows; i++)
+	{
+		for (int j = 1; j <= result.get_size().columns; j++)
+		{
+			result.set_elem(0, i, j);
+		}
+	}
+
+	return result;
+}
+
+Matrix Matrix::Zeros(int rows, int columns)
+{
+	Matrix result(rows, columns);
+
+	for (int i = 1; i <= rows; i++)
+	{
+		for (int j = 1; j <= columns; j++)
+		{
+			result.set_elem(0, i, j);
+		}
+	}
+
+	return result;
+}
+
+Matrix Matrix::Identity(int rows, int columns)
+{
+	if (rows != columns)
+	{
+		throw ERROR_OF_CREATING_IDENTITY_MATRIX;
+	}
+
+	Matrix result(rows, columns);
+
+	for (int i = 1; i <= rows; i++)
+	{
+		for (int j = 1; j <= columns; j++)
+		{
+			if (i == j)
+			{
+				result.set_elem(1, i, j);
+			}
+			else
+			{
+				result.set_elem(0, i, j);
+			}
+		}
+	}
+
 	return result;
 }

@@ -3,22 +3,17 @@
 
 int main(int argc, char* argv[])
 {
-	Matrix mat1 {
-		{2, 2, 14},
-		{3, 6, 0},
-		{2, 5, 1}
-	};
-
-	Matrix mat2 {
-		{1, 2, 7, 1},
-		{2, 4, 3, 1},
-		{4, 2, 2, 3},
-		{3, 1, 2, 1}
-	};
-
 	try
 	{
-		std::cout << det(mat2) << std::endl;
+		Matrix matrix = { 
+			{1, 2},
+			{3, 4}
+		};
+
+		Matrix E = Matrix::Identity(2, 2);
+
+		std::cout << det(E) << std::endl;
+
 	}
 	catch (const char* exception)
 	{

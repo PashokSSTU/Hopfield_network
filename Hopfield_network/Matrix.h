@@ -10,6 +10,8 @@
 #define ERROR_OF_MULTIPLYING "Error! Matrix sizes not respected when multiplying!"
 #define ERROR_OF_CALCULATING_DETERMINANT "Determinant calculation error! This matrix is not square!"
 //"Inverse matrix calculation error! For this matrix, it does not exist!"
+#define ERROR_OF_CONVERTING_TO_IDENTITY_MATRIX "Error! This matrix cannot be converted to the identity matrix, since it is not square!"
+#define ERROR_OF_CREATING_IDENTITY_MATRIX "Error! You cannot create an identity matrix of this size because the matrix must be square!"
 
 struct Matrix_Size;
 class Matrix;
@@ -26,6 +28,7 @@ double multipy_of_vectors(int row, int col, const Matrix& obj1, const Matrix& ob
 
 
 double det(const Matrix& obj);
+Matrix t(const Matrix& obj);
 int rank(const Matrix& obj);
 Matrix& adj(const Matrix& obj);	
 Matrix& inv(const Matrix& obj);
@@ -124,6 +127,7 @@ public:
 	bool is_square() const;
 	matrix_size_t get_size() const;
 	double get_elem(int row, int col) const;
+	void set_elem(double data, int row, int col);
 
 	friend Matrix operator+(const Matrix& obj1, const Matrix& obj2);
 	friend Matrix operator-(const Matrix& obj1, const Matrix& obj2);
@@ -135,6 +139,14 @@ public:
 	friend std::ostream& operator<<(std::ostream& out ,const Matrix& obj);
 	friend double multipy_of_vectors(int row, int col, const Matrix& obj1, const Matrix& obj2);
 
+	static Matrix Zeros(int rows, int columns);
+	static Matrix Identity(int rows, int columns);
+
+	static struct Convert
+	{
+		static Matrix ToZeros(const Matrix& obj);
+		static Matrix ToIdentity(const Matrix& obj);
+	};
 
 private:
 	matrix_size_t size;
