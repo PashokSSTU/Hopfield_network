@@ -129,6 +129,12 @@ public:
 	Matrix operator+() const;
 	Matrix operator-() const;
 
+	void operator+=(const Matrix& obj);
+	void operator-=(const Matrix& obj);
+	void operator*=(const Matrix& obj);
+	void operator*=(const double number);
+	void operator/=(const double number);
+
 	bool is_square() const;
 	matrix_size_t get_size() const;
 	double get_elem(int row, int col) const;
