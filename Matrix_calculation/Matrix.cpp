@@ -173,6 +173,80 @@ Matrix Matrix::operator-() const
 	return result;
 }
 
+
+void Matrix::operator+=(const Matrix& obj)
+{
+	if (this->get_size() != obj.get_size())
+	{
+		throw ERROR_OF_ADDING;
+	}
+
+	for (int i = 1; i <= obj.get_size().rows; i++)
+	{
+		for (int j = 1; j <= obj.get_size().columns; j++)
+		{
+			this->set_elem(this->get_elem(i, j) + obj.get_elem(i, j), i, j);
+		}
+	}
+}
+
+void Matrix::operator-=(const Matrix& obj)
+{
+	if (this->get_size() != obj.get_size())
+	{
+		throw ERROR_OF_SUBSTRACTING;
+	}
+
+	for (int i = 1; i <= obj.get_size().rows; i++)
+	{
+		for (int j = 1; j <= obj.get_size().columns; j++)
+		{
+			this->set_elem(this->get_elem(i, j) - obj.get_elem(i, j), i, j);
+		}
+	}
+}
+
+void Matrix::operator*=(const Matrix& obj)
+{
+	if (this->size.columns != obj.size.rows)
+	{
+		throw ERROR_OF_MULTIPLYING;
+	}
+
+	Matrix tmp = (*this);
+	this->resize(this->size.rows, obj.size.columns);
+
+	for (int i = 0; i < this->size.rows; i++)
+	{
+		for (int j = 0; j < this->size.columns; j++)
+		{
+			this->matrix[i][j] = multipy_of_vectors(i, j, tmp, obj);
+		}
+	}
+}
+
+void Matrix::operator*=(const double number)
+{
+	for (int i = 1; i <= this->get_size().rows; i++)
+	{
+		for (int j = 1; j <= this->get_size().columns; j++)
+		{
+			this->set_elem(this->get_elem(i, j) * number, i, j);
+		}
+	}
+}
+
+void Matrix::operator/=(const double number)
+{
+	for (int i = 1; i <= this->get_size().rows; i++)
+	{
+		for (int j = 1; j <= this->get_size().columns; j++)
+		{
+			this->set_elem(this->get_elem(i, j) / number, i, j);
+		}
+	}
+}
+
 Matrix operator+(const Matrix& obj1, const Matrix& obj2)
 {
 	Matrix result;

@@ -31,8 +31,8 @@ double multipy_of_vectors(int row, int col, const Matrix& obj1, const Matrix& ob
 
 struct Matrix_Size
 {
-	unsigned int rows;
-	unsigned int columns;
+	size_t rows;
+	size_t columns;
 
 	friend bool operator==(const Matrix_Size size1, const Matrix_Size size2);
 	friend bool operator!=(const Matrix_Size size1, const Matrix_Size size2);
@@ -128,6 +128,12 @@ public:
 	Matrix& operator=(std::initializer_list<std::initializer_list<double>> &l);
 	Matrix operator+() const;
 	Matrix operator-() const;
+
+	void operator+=(const Matrix& obj);
+	void operator-=(const Matrix& obj);
+	void operator*=(const Matrix& obj);
+	void operator*=(const double number);
+	void operator/=(const double number);
 
 	bool is_square() const;
 	matrix_size_t get_size() const;
