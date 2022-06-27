@@ -212,7 +212,7 @@ void Matrix::operator*=(const Matrix& obj)
 	{
 		throw ERROR_OF_MULTIPLYING;
 	}
-
+	
 	Matrix tmp = (*this);
 	this->resize(this->size.rows, obj.size.columns);
 
