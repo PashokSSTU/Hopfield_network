@@ -9,7 +9,8 @@
 #define ERROR_OF_SUBSTRACTING "Error! The dimensions of the matrices are not respected when substracting!"
 #define ERROR_OF_MULTIPLYING "Error! Matrix sizes not respected when multiplying!"
 #define ERROR_OF_CALCULATING_DETERMINANT "Determinant calculation error! This matrix is not square!"
-//"Inverse matrix calculation error! For this matrix, it does not exist!"
+#define ERROR_OF_CALCULATING_INVERSE_MATRIX "Inverse matrix calculation error! For this matrix, it does not exist!"
+#define ERROR_OF_CALCULATING_ADJUGATE_MATRIX "Adjugate matrix calculation error! For this matrix, it does not exist!"
 #define ERROR_OF_CONVERTING_TO_IDENTITY_MATRIX "Error! This matrix cannot be converted to the identity matrix, since it is not square!"
 #define ERROR_OF_CREATING_IDENTITY_MATRIX "Error! You cannot create an identity matrix of this size because the matrix must be square!"
 

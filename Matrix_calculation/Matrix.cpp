@@ -459,6 +459,11 @@ double Matrix::A(const Matrix& obj, int row, int column)
 
 Matrix Matrix::adj(const Matrix& obj)
 {
+	if (!obj.is_square())
+	{
+		throw ERROR_OF_CALCULATING_ADJUGATE_MATRIX;
+	}
+
 	Matrix result(obj.get_size());
 
 	for (int i = 1; i <= obj.get_size().rows; i++)
@@ -476,6 +481,11 @@ Matrix Matrix::adj(const Matrix& obj)
 
 Matrix Matrix::inv(const Matrix& obj)
 {
+	if (!obj.is_square() || det(obj) == 0)
+	{
+		throw ERROR_OF_CALCULATING_INVERSE_MATRIX;
+	}
+
 	return (adj(obj) / det(obj));
 }
 
