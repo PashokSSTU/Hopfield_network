@@ -7,19 +7,7 @@ int main(int argc, char* argv[])
 {
 	try
 	{
-		Matrix A = {
-			{1, 2}
-		};
-
-		Matrix B = {
-			{1},
-			{2}
-		};
-
-		A *= B;
-
-		cout << A << endl;
-
+		
 	}
 	catch (const char* exception)
 	{

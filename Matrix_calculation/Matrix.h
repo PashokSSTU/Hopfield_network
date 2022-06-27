@@ -157,8 +157,9 @@ public:
 	static double det(const Matrix& obj);
 	static Matrix t(const Matrix& obj);
 	static int rank(const Matrix& obj);
-	static Matrix& adj(const Matrix& obj);
-	static Matrix& inv(const Matrix& obj);
+	static double A(const Matrix& obj, int row, int column);
+	static Matrix adj(const Matrix& obj);
+	static Matrix inv(const Matrix& obj);
 
 	static struct Convert
 	{

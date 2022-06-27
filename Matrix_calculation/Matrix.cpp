@@ -427,6 +427,58 @@ Matrix Matrix::t(const Matrix& obj)
 	return result;
 }
 
+double Matrix::A(const Matrix& obj, int row, int column)
+{
+	double result;
+	Matrix tmp(obj.get_size().rows - 1, obj.get_size().columns - 1);
+
+	for (int i = 1, _i = 1; i <= obj.get_size().rows; i++, _i++)
+	{
+		if (row == i)
+		{
+			--_i;
+			continue;
+		}
+
+		for (int j = 1, _j = 1; j <= obj.get_size().columns; j++, _j++)
+		{
+			if (column == j)
+			{
+				--_j;
+				continue;
+			}
+
+			tmp.set_elem(obj.get_elem(i, j), _i, _j);
+		}
+	}
+
+	result = std::pow(-1, row + column) * det(tmp);
+
+	return result;
+}
+
+Matrix Matrix::adj(const Matrix& obj)
+{
+	Matrix result(obj.get_size());
+
+	for (int i = 1; i <= obj.get_size().rows; i++)
+	{
+		for (int j = 1; j <= obj.get_size().rows; j++)
+		{
+			result.set_elem(A(obj, i, j), i, j);
+		}
+	}
+
+	result = t(result);
+
+	return result;
+}
+
+Matrix Matrix::inv(const Matrix& obj)
+{
+	return (adj(obj) / det(obj));
+}
+
 Matrix Matrix::Convert::ToIdentity(const Matrix& obj)
 {
 	if (obj.get_size().rows != obj.get_size().columns)
