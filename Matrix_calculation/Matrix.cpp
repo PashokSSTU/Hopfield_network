@@ -359,6 +359,69 @@ double multipy_of_vectors(int row, int col, const Matrix& obj1, const Matrix& ob
 	return elem;
 }
 
+double Matrix::dot(const Matrix& obj1, const Matrix& obj2)
+{
+	double result = 0;
+
+	if ((obj1.get_size().rows != 1 && obj1.get_size().columns != 1 || obj2.get_size().rows != 1 && obj2.get_size().columns != 1) ||
+		(obj1.get_size().rows != obj2.get_size().rows && obj1.get_size().columns != obj2.get_size().columns &&
+			obj1.get_size().rows != obj2.get_size().columns && obj1.get_size().columns != obj2.get_size().rows))
+	{
+		throw ERROR_OF_SCALAR_MULTIPLAYING;
+	}
+
+	if (obj1.get_size().rows == obj2.get_size().rows)
+	{
+		for (int i = 1; i <= obj1.get_size().columns; i++)
+		{
+			result += obj1.get_elem(1, i) * obj2.get_elem(1, i);
+		}
+	}
+	else if (obj1.get_size().columns == obj2.get_size().columns)
+	{
+		for (int i = 1; i <= obj1.get_size().rows; i++)
+		{
+			result += obj1.get_elem(i, 1) * obj2.get_elem(i, 1);
+		}
+	}
+	else if (obj1.get_size().rows == obj2.get_size().columns)
+	{
+		for (int i = 1; i <= obj1.get_size().columns; i++)
+		{
+			result += obj1.get_elem(1, i) * obj2.get_elem(i, 1);
+		}
+	}
+	else if (obj1.get_size().columns == obj2.get_size().rows)
+	{
+		for (int i = 1; i <= obj1.get_size().rows; i++)
+		{
+			result += obj1.get_elem(i, 1) * obj2.get_elem(1, i);
+		}
+	}
+
+	return result;
+}
+
+Matrix Matrix::Hadamard_product(const Matrix& obj1, const Matrix& obj2)
+{
+	if (obj1.get_size() != obj2.get_size())
+	{
+		throw ERROR_OF_HADAMARD_PRODUCT;
+	}
+
+	Matrix result(obj1.get_size());
+
+	for (int i = 1; i <= obj1.get_size().rows; i++)
+	{
+		for (int j = 1; j <= obj1.get_size().columns; j++)
+		{
+			result.set_elem(obj1.get_elem(i, j) * obj2.get_elem(i, j), i, j);
+		}
+	}
+
+	return result;
+}
+
 double Matrix::det(const Matrix& obj)
 {
 	if (!obj.is_square())

@@ -13,6 +13,8 @@
 #define ERROR_OF_CALCULATING_ADJUGATE_MATRIX "Adjugate matrix calculation error! For this matrix, it does not exist!"
 #define ERROR_OF_CONVERTING_TO_IDENTITY_MATRIX "Error! This matrix cannot be converted to the identity matrix, since it is not square!"
 #define ERROR_OF_CREATING_IDENTITY_MATRIX "Error! You cannot create an identity matrix of this size because the matrix must be square!"
+#define ERROR_OF_SCALAR_MULTIPLAYING "Error! The dimensions of the matrices are not respected when scalar substracting!"
+#define ERROR_OF_HADAMARD_PRODUCT "Error! The dimensions of the matrices are not respected when Hadamard product!"
 
 struct Matrix_Size;
 class Matrix;
@@ -161,6 +163,8 @@ public:
 	static double A(const Matrix& obj, int row, int column);
 	static Matrix adj(const Matrix& obj);
 	static Matrix inv(const Matrix& obj);
+	static double dot(const Matrix& obj1, const Matrix& obj2);
+	static Matrix Hadamard_product(const Matrix& obj1, const Matrix& obj2);
 
 	static struct Convert
 	{
