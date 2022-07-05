@@ -43,6 +43,30 @@ void Matrix::set_elem(double data, int row, int col)
 	this->matrix[row - 1][col - 1] = data;
 }
 
+Matrix Matrix::get_row(int row)
+{
+	Matrix result(1, this->get_size().columns);
+
+	for (int j = 1; j <= (this->get_size().columns); j++)
+	{
+		result.set_elem(this->get_elem(row, j), 1, j);
+	}
+
+	return result;
+}
+
+Matrix Matrix::get_column(int column)
+{
+	Matrix result(this->get_size().rows, 1);
+
+	for (int i = 1; i <= (this->get_size().rows); i++)
+	{
+		result.set_elem(this->get_elem(i, column), i, 1);
+	}
+
+	return result;
+}
+
 bool operator==(const Matrix_Size size1, const Matrix_Size size2)
 {
 	return (size1.rows == size2.rows && size1.columns == size2.columns);
