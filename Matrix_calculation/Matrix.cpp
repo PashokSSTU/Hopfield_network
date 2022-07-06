@@ -67,6 +67,22 @@ Matrix Matrix::get_column(int column)
 	return result;
 }
 
+void Matrix::set_row(const Matrix& obj, int row)
+{
+	for (int j = 1; j <= this->get_size().columns; j++)
+	{
+		this->set_elem(obj.get_elem(1, j), row, j);
+	}
+}
+
+void Matrix::set_column(const Matrix& obj, int column)
+{
+	for (int i = 1; i <= this->get_size().rows; i++)
+	{
+		this->set_elem(obj.get_elem(i, 1), i, column);
+	}
+}
+
 bool operator==(const Matrix_Size size1, const Matrix_Size size2)
 {
 	return (size1.rows == size2.rows && size1.columns == size2.columns);
