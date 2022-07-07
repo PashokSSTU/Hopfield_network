@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Matrix.h"
 
-Matrix::Matrix(unsigned int rows = 3, unsigned int columns = 3) : size({ rows, columns })
+Matrix::Matrix(unsigned int rows, unsigned int columns) : size({ rows, columns })
 {
 	matrix.resize(rows);
 

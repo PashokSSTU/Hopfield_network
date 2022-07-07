@@ -47,7 +47,7 @@ class Matrix
 {
 public:
 	
-	Matrix(unsigned int rows, unsigned int columns);
+	Matrix(unsigned int rows = 3, unsigned int columns = 3);
 	Matrix(matrix_size_t _size);
 	Matrix(const Matrix& _matrix);
 	Matrix(const std::initializer_list<std::initializer_list<double>>& list);
