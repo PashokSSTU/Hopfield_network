@@ -24,7 +24,7 @@ Matrix::Matrix(matrix_size_t _size) : size(_size)
 
 Matrix::Matrix(const Matrix& _matrix)
 {
-	if (this->size != _matrix.size)
+	if ((this->size != _matrix.size) || (this->matrix.size() != _matrix.matrix.size()))
 	{
 		this->size = _matrix.size;
 
